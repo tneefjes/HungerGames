@@ -28,6 +28,11 @@ public class GamesController {
         System.out.println("Welcome to the Hunger Games!");
 
         System.out.println("The amount of survivors: " + amountOfSurvivors(contestants));
+
+        // Let to contestants meet to test!
+        battle(contestants[0], contestants[1]);
+
+        System.out.println("The amount of survivors: " + amountOfSurvivors(contestants));
     }
 
     public int amountOfSurvivors (Contestant[] contestants) {
@@ -48,4 +53,46 @@ public class GamesController {
         }
     }
 
+    public boolean isEncounter() {
+        if (Math.random()<0.25) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void battle(Contestant contestant1, Contestant contestant2) {
+        Contestant attacker;
+        Contestant defender;
+
+        if (Math.random()<0.5) {
+            attacker = contestant1;
+            defender = contestant2;
+        } else {
+            attacker = contestant1;
+            defender = contestant2;
+
+        }
+
+        double attackerHealth = attacker.getHealthLevel();
+        double attackerAttack = attacker.getAttackLevel();
+
+        double defenderHealth = defender.getHealthLevel();
+        double defenderAttack = defender.getAttackLevel();
+
+        boolean winner=false;
+        do {
+            defenderHealth -= attackerAttack/10;
+            if (defenderHealth>0) {
+                attackerHealth -= defenderAttack;
+            }
+
+            if (defenderHealth<0 || attackerHealth<0) {
+                winner = true;
+            }
+        } while (winner==false);
+        attacker.setHealthLevel(attackerHealth);
+        defender.setHealthLevel(defenderHealth);
+    }
 }
