@@ -4,10 +4,7 @@ public class Main {
         // Create the games controller
         GamesController myGamesController = new GamesController();
 
-        // Setup the game
-        Contestant[] myContestants = myGamesController.setup();
-
         // Start the game
-        myGamesController.start(myContestants);
+        myGamesController.start();
     }
 }
