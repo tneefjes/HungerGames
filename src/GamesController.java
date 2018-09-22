@@ -31,7 +31,7 @@ public class GamesController {
     }
 
     public void start() {
-        int numberOfContestants = 4;
+        int numberOfContestants = 24;
         contestants = createContestants(numberOfContestants);
 
         System.out.println("\nWELCOME TO THE HUNGER GAMES!");
@@ -50,7 +50,7 @@ public class GamesController {
                 contestant1 = contestants.get(i);
                 for (int j = (i + 1); j < contestants.size(); j++) {
                     contestant2 = contestants.get(j);
-                    if (isEncounter()) {
+                    if (isEncounter(myRandom)) {
                         System.out.println("\n" + contestant1.getName() + " and " + contestant2.getName() + " meet!");
                         contestants.remove(loser(contestant1, contestant2));
                     }
@@ -63,13 +63,8 @@ public class GamesController {
         System.out.println("\n" + contestants.get(0).getName() + "(" + contestants.get(0).getType() + ")" + " is the winner of the Hunger Games!");
     }
 
-    public boolean isEncounter() {
-        if (Math.random()<0.25) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    public boolean isEncounter(Random random) {
+        return (random.nextInt(8) == 0) ? true : false;
     }
 
     private Contestant loser(Contestant contestant1, Contestant contestant2) {
@@ -135,7 +130,7 @@ public class GamesController {
     }
 
     private boolean findsItem(Random random) {
-        return (random.nextInt(3) == 1) ? true : false;
+        return (random.nextInt(4) == 0) ? true : false;
     }
 
     private boolean isImprovement(Contestant contestant, Item item) {

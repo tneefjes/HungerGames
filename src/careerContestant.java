@@ -1,13 +1,18 @@
 import java.util.Random;
 
-public class careerContestant extends Contestant{
+public class CareerContestant extends Contestant{
 
-    private int attackBonus = 10;
+    private int attackBonus = 1;
 
-    public careerContestant(Random myRandom, String gender) {
-        super(myRandom, gender);
-        setAttackLevel(getAttackLevel()+attackBonus);
-        setItem(true);
+    public CareerContestant(Random random, NameGenerator nameGenerator, Gender gender) {
+        super(random, nameGenerator, gender);
+        setType(TypeContestant.CAREER);
+        setAttackLevel(getAttackLevel() + attackBonus);
+        if (random.nextInt(2) == 0) {
+            setItem(new Sword(random));
+        } else {
+            setItem(new Shield(random));
+        }
     }
 }
 
