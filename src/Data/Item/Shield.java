@@ -1,3 +1,5 @@
+package Data.Item;
+
 import java.util.Random;
 
 public class Shield extends Item {

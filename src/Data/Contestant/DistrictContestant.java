@@ -1,3 +1,5 @@
+package Data.Contestant;
+
 import java.util.Random;
 
 public class DistrictContestant extends Contestant {
@@ -5,7 +7,7 @@ public class DistrictContestant extends Contestant {
 
     public DistrictContestant(Random myRandom, NameGenerator nameGenerator, Gender gender) {
         super(myRandom, nameGenerator, gender);
-        setType(TypeContestant.DISTRICT);
+        setType(ContestantType.DISTRICT);
         setDefenseLevel(getDefenseLevel() + defenseBonus);
     }
 }

@@ -1,8 +1,9 @@
+package Data.Contestant;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import java.util.List;
 public class NameGenerator {
     private String maleNamesText = "D:\\Users\\TNEEFJES\\Documents\\Software Engineering Track\\maleNames.txt";
     private String femaleNamesText = "D:\\Users\\TNEEFJES\\Documents\\Software Engineering Track\\femaleNames.txt";
-    private List<String> maleNamesList = new ArrayList<String>();
-    private List<String> femaleNamesList = new ArrayList<String>();
+    private List<String> maleNamesList;
+    private List<String> femaleNamesList;
 
     public NameGenerator() {
         maleNamesList = textToList(maleNamesText);
@@ -22,7 +23,7 @@ public class NameGenerator {
     }
 
     private List<String> textToList(String inputFile) {
-        List<String> returnList = new ArrayList<String>();
+        List<String> returnList = new ArrayList<>();
         BufferedReader reader = null;
         {
             try {
@@ -33,6 +34,7 @@ public class NameGenerator {
         }
         boolean endOfFile = false;
         String line = null;
+        String name;
         do {
             try {
                 line = reader.readLine();
@@ -40,7 +42,7 @@ public class NameGenerator {
                 e.printStackTrace();
             }
             if (line != null) {
-                String name = line.substring(0,line.indexOf(' '));
+                name = line.substring(0, line.indexOf(' '));
                 returnList.add(name);
             } else {
                 endOfFile = true;
@@ -54,13 +56,8 @@ public class NameGenerator {
         return returnList;
     }
 
-    public String GenerateName(Gender gender) {
-        String name = null;
-        if (gender == gender.MALE) {
-            name = maleNamesList.get((int)(Math.random()*maleNamesList.size()));
-        } else {
-            name = femaleNamesList.get((int)(Math.random()*femaleNamesList.size()));
-        }
-        return name;
+    String GenerateName(Gender gender) {
+        return (gender == Gender.MALE) ? maleNamesList.get((int)(Math.random()*maleNamesList.size())) :
+                femaleNamesList.get((int)(Math.random()*femaleNamesList.size()));
     }
 }

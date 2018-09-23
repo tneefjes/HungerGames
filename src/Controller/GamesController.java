@@ -1,3 +1,11 @@
+package Controller;
+
+import Data.Contestant.*;
+import Data.Item.Item;
+import Data.Item.ItemType;
+import Data.Item.Shield;
+import Data.Item.Sword;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -5,22 +13,21 @@ import java.util.Random;
 
 public class GamesController {
     private Random myRandom = new Random();
-    private List<Contestant> contestants;
 
     private List<Contestant> createContestants(int numberOfContestants) {
-       List<Contestant> returnList = new ArrayList<Contestant>();
+       List<Contestant> returnList = new ArrayList<>();
        int numberDistrictContestants = (int)((numberOfContestants * 0.75) + 0.5);
        int numberCareerContestant = numberOfContestants - numberDistrictContestants;
        NameGenerator myNameGenerator = new NameGenerator();
 
-       for(int i = 0; i < numberDistrictContestants; i++) {
+       for (int i = 0; i < numberDistrictContestants; i++) {
            if (i % 2 == 0) {
                returnList.add(new DistrictContestant(myRandom, myNameGenerator, Gender.MALE));
            } else {
                returnList.add(new DistrictContestant(myRandom, myNameGenerator, Gender.FEMALE));
            }
        }
-        for(int i = 0; i < numberCareerContestant; i++) {
+        for (int i = 0; i < numberCareerContestant; i++) {
             if (i % 2 == 0) {
                 returnList.add(new CareerContestant(myRandom, myNameGenerator, Gender.MALE));
             } else {
@@ -32,18 +39,17 @@ public class GamesController {
 
     public void start() {
         int numberOfContestants = 24;
-        contestants = createContestants(numberOfContestants);
-
+        List<Contestant> contestants = createContestants(numberOfContestants);
         System.out.println("\nWELCOME TO THE HUNGER GAMES!");
         System.out.println("\nThe following contestants have been selected:");
         for (Contestant contestant : contestants) {
             System.out.println(contestant);
         }
+
         int day = 1;
         do {
             System.out.println("\nDay" + day);
             Collections.shuffle(contestants);
-
             Contestant contestant1;
             Contestant contestant2;
             for (int i = 0; i < contestants.size() - 1; i++) {
@@ -52,7 +58,7 @@ public class GamesController {
                     contestant2 = contestants.get(j);
                     if (isEncounter(myRandom)) {
                         System.out.println("\n" + contestant1.getName() + " and " + contestant2.getName() + " meet!");
-                        contestants.remove(loser(contestant1, contestant2));
+                        contestants.remove(loser(myRandom, contestant1, contestant2));
                     }
                 }
             }
@@ -63,14 +69,14 @@ public class GamesController {
         System.out.println("\n" + contestants.get(0).getName() + "(" + contestants.get(0).getType() + ")" + " is the winner of the Hunger Games!");
     }
 
-    public boolean isEncounter(Random random) {
-        return (random.nextInt(8) == 0) ? true : false;
+    private boolean isEncounter(Random random) {
+        return (random.nextInt(8) == 0);
     }
 
-    private Contestant loser(Contestant contestant1, Contestant contestant2) {
+    private Contestant loser(Random random, Contestant contestant1, Contestant contestant2) {
         Contestant attacker;
         Contestant defender;
-        if (Math.random()<0.5) {
+        if (random.nextInt(2) == 0) {
             attacker = contestant1;
             defender = contestant2;
         } else {
@@ -78,7 +84,6 @@ public class GamesController {
             defender = contestant1;
         }
 
-        int attackStrength;
         do {
             attack(attacker, defender);
             if (defender.isAlive()) {
@@ -109,7 +114,6 @@ public class GamesController {
 
     private void itemAssigner(List<Contestant> contestants, Random random) {
         Item newItem;
-
         for (Contestant contestant : contestants) {
             if (findsItem(myRandom)) {
                 newItem = itemGenerator(random);
@@ -130,19 +134,19 @@ public class GamesController {
     }
 
     private boolean findsItem(Random random) {
-        return (random.nextInt(4) == 0) ? true : false;
+        return (random.nextInt(4) == 0);
     }
 
     private boolean isImprovement(Contestant contestant, Item item) {
         if (item.getType() == ItemType.ATTACK) {
             if (contestant.getAttackItem() != null) {
-                return (contestant.getAttackItem().getBonus() < item.getBonus()) ? true : false;
+                return (contestant.getAttackItem().getBonus() < item.getBonus());
             } else {
                 return true;
             }
         } else {
             if (contestant.getDefenseItem() != null) {
-                return (contestant.getDefenseItem().getBonus() < item.getBonus()) ? true : false;
+                return (contestant.getDefenseItem().getBonus() < item.getBonus());
             } else {
                 return true;
             }

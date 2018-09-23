@@ -1,10 +1,12 @@
+package Data.Item;
+
 import java.util.Random;
 
 public abstract class Item {
     private ItemType type;
     private final int bonus;
 
-    public Item(Random random) {
+    Item(Random random) {
         bonus = 1 + random.nextInt(2);
     }
 
@@ -12,7 +14,7 @@ public abstract class Item {
         return type;
     }
 
-    public void setType(ItemType type) {
+    void setType(ItemType type) {
         this.type = type;
     }
 

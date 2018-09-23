@@ -1,9 +1,14 @@
+package Data.Contestant;
+
+import Data.Item.Item;
+import Data.Item.ItemType;
+
 import java.util.Random;
 
 public abstract class Contestant {
     private final String name;
     private final Gender gender;
-    private TypeContestant type;
+    private ContestantType type;
     private int attackLevel;
     private int defenseLevel;
     private final int healthLevelOriginal;
@@ -12,7 +17,7 @@ public abstract class Contestant {
     private Item defenseItem;
 
     // Constructor
-    public Contestant(Random random, NameGenerator nameGenerator,  Gender gender) {
+    Contestant(Random random, NameGenerator nameGenerator, Gender gender) {
         name = nameGenerator.GenerateName(gender);
         this.gender = gender;
         attackLevel = 5 + random.nextInt(4);
@@ -25,15 +30,11 @@ public abstract class Contestant {
         return name;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public TypeContestant getType() {
+    public ContestantType getType() {
         return type;
     }
 
-    public void setType(TypeContestant type) {
+    void setType(ContestantType type) {
         this.type = type;
     }
 
@@ -41,7 +42,7 @@ public abstract class Contestant {
         return attackLevel;
     }
 
-    public void setAttackLevel(int attackLevel) {
+    void setAttackLevel(int attackLevel) {
         this.attackLevel = attackLevel;
     }
 
@@ -49,7 +50,7 @@ public abstract class Contestant {
         return defenseLevel;
     }
 
-    public void setDefenseLevel(int defenseLevel) {
+    void setDefenseLevel(int defenseLevel) {
         this.defenseLevel = defenseLevel;
     }
 
@@ -84,11 +85,7 @@ public abstract class Contestant {
     }
 
     public boolean isAlive() {
-        if (healthLevel > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (healthLevel > 0);
     }
 
     @Override
